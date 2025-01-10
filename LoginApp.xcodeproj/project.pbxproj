@@ -13,6 +13,8 @@
 		2BC17E362D30F997005F1B18 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 2BC17E352D30F997005F1B18 /* Base */; };
 		2BC17E382D30F998005F1B18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BC17E372D30F998005F1B18 /* Assets.xcassets */; };
 		2BC17E3B2D30F998005F1B18 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 2BC17E3A2D30F998005F1B18 /* Base */; };
+		2BFD22972D31A789006ED0B7 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFD22962D31A789006ED0B7 /* SessionManager.swift */; };
+		2BFD229A2D31A81D006ED0B7 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFD22992D31A81D006ED0B7 /* LoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		2BC17E372D30F998005F1B18 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2BC17E3A2D30F998005F1B18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2BC17E3C2D30F998005F1B18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BFD22962D31A789006ED0B7 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		2BFD22992D31A81D006ED0B7 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,8 @@
 		2BC17E2D2D30F997005F1B18 /* LoginApp */ = {
 			isa = PBXGroup;
 			children = (
+				2BFD229B2D31B08C006ED0B7 /* Managers */,
+				2BFD22982D31A808006ED0B7 /* ViewModel */,
 				2BC17E2E2D30F997005F1B18 /* AppDelegate.swift */,
 				2BC17E302D30F997005F1B18 /* SceneDelegate.swift */,
 				2BC17E322D30F997005F1B18 /* ViewController.swift */,
@@ -65,6 +71,22 @@
 				2BC17E3C2D30F998005F1B18 /* Info.plist */,
 			);
 			path = LoginApp;
+			sourceTree = "<group>";
+		};
+		2BFD22982D31A808006ED0B7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2BFD22992D31A81D006ED0B7 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2BFD229B2D31B08C006ED0B7 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				2BFD22962D31A789006ED0B7 /* SessionManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +162,8 @@
 			files = (
 				2BC17E332D30F997005F1B18 /* ViewController.swift in Sources */,
 				2BC17E2F2D30F997005F1B18 /* AppDelegate.swift in Sources */,
+				2BFD22972D31A789006ED0B7 /* SessionManager.swift in Sources */,
+				2BFD229A2D31A81D006ED0B7 /* LoginViewModel.swift in Sources */,
 				2BC17E312D30F997005F1B18 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

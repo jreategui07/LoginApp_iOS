@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    private var viewModel: LoginViewModel!
+    
     private let wallpaperImageView: UIImageView = {
         let imageView = UIImageView(frame: UIScreen.main.bounds)
         imageView.image = UIImage(named: "wallpaper")
@@ -54,7 +56,6 @@ class ViewController: UIViewController {
         ])
         return textField
     }()
-
     
     private let passwordTextField: UITextField = {
         let textField = UITextField()
@@ -178,6 +179,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = LoginViewModel()
         
         // Wallpaper
         self.view.insertSubview(wallpaperImageView, at: 0)
@@ -212,10 +214,10 @@ class ViewController: UIViewController {
         bottomStackView.addArrangedSubview(separatorView)
         bottomStackView.addArrangedSubview(button2Button)
         
-        // Getting session values stored in the UserDefaults
-        usernameTextField.text = UserDefaults.standard.string(forKey: "savedUsername")
-        passwordTextField.text = UserDefaults.standard.string(forKey: "savedPassword")
-        rememberMeSwitch.isOn = UserDefaults.standard.bool(forKey: "rememberMe")
+        // Getting session values stored in the UserDefaults through the View Model
+        usernameTextField.text = viewModel.getSavedUsername()
+        passwordTextField.text = viewModel.getSavedPassword()
+        rememberMeSwitch.isOn = viewModel.getRememberMe()
         
         // Login button action
         continueButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
@@ -274,30 +276,21 @@ class ViewController: UIViewController {
         let username = usernameTextField.text ?? ""
         let password = passwordTextField.text ?? ""
         let rememberMe = rememberMeSwitch.isOn
-
-        if isValidLogin(username: username, password: password) {
-            passwordTextField.textColor = .none
-            errorLabel.isHidden = true
-            loginSuccessfully()
-            if rememberMe {
-                saveSession(username: username, password: password, rememberMe: rememberMe)
+        viewModel.login(username: username, password: password, rememberMe: rememberMe) { succes, error in
+            if succes {
+                self.errorLabel.text = ""
+                self.passwordTextField.textColor = .none
+                self.errorLabel.isHidden = true
+                self.loginSuccessConfirmation()
             } else {
-                removeSession()
+                self.errorLabel.text = error
+                self.passwordTextField.textColor = .red
+                self.errorLabel.isHidden = false
             }
-        } else {
-            passwordTextField.textColor = .red
-            errorLabel.text = "Your username or password is incorrect. Please, try again."
-            errorLabel.isHidden = false
         }
     }
 
-    private func isValidLogin(username: String, password: String) -> Bool {
-        print(username)
-        print(password)
-        return username == "Admin" && password == "123456789"
-    }
-
-    private func loginSuccessfully() {
+    private func loginSuccessConfirmation() {
         let alert = UIAlertController(
             title: "Logging successful",
             message: "¡Welcome!",
@@ -305,17 +298,5 @@ class ViewController: UIViewController {
         )
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
-    }
-    
-    private func saveSession(username: String, password: String, rememberMe: Bool) {
-        UserDefaults.standard.set(username, forKey: "savedUsername")
-        UserDefaults.standard.set(password, forKey: "savedPassword")
-        UserDefaults.standard.set(rememberMe, forKey: "rememberMe")
-    }
-    
-    private func removeSession() {
-        UserDefaults.standard.removeObject(forKey: "savedUsername")
-        UserDefaults.standard.removeObject(forKey: "savedPassword")
-        UserDefaults.standard.removeObject(forKey: "rememberMe")
     }
 }
