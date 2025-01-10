@@ -167,6 +167,15 @@ class ViewController: UIViewController {
         return view
     }()
     
+    private let errorLabel: UILabel = {
+        let label = UILabel()
+        label.isHidden = true
+        label.textColor = .red
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -203,8 +212,17 @@ class ViewController: UIViewController {
         bottomStackView.addArrangedSubview(separatorView)
         bottomStackView.addArrangedSubview(button2Button)
         
+        // Getting session values stored in the UserDefaults
+        usernameTextField.text = UserDefaults.standard.string(forKey: "savedUsername")
+        passwordTextField.text = UserDefaults.standard.string(forKey: "savedPassword")
+        rememberMeSwitch.isOn = UserDefaults.standard.bool(forKey: "rememberMe")
+        
+        // Login button action
+        continueButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
+        
         halfSheetView.addSubview(usernameTextField)
         halfSheetView.addSubview(passwordTextField)
+        halfSheetView.addSubview(errorLabel)
         halfSheetView.addSubview(horizontalStackView)
         halfSheetView.addSubview(continueButton)
         halfSheetView.addSubview(bottomStackView)
@@ -219,6 +237,10 @@ class ViewController: UIViewController {
             passwordTextField.leadingAnchor.constraint(equalTo: halfSheetView.leadingAnchor, constant: 20),
             passwordTextField.trailingAnchor.constraint(equalTo: halfSheetView.trailingAnchor, constant: -20),
             passwordTextField.heightAnchor.constraint(equalToConstant: 50),
+            
+            errorLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 5),
+            errorLabel.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+            errorLabel.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
             
             horizontalStackView.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
             horizontalStackView.leadingAnchor.constraint(equalTo: halfSheetView.leadingAnchor, constant: 20),
@@ -242,5 +264,58 @@ class ViewController: UIViewController {
             bottomStackView.leadingAnchor.constraint(equalTo: halfSheetView.leadingAnchor, constant: 50),
             bottomStackView.trailingAnchor.constraint(equalTo: halfSheetView.trailingAnchor, constant: -50),
         ])
+    }
+    
+    @objc private func continueButtonTapped() {
+        handleContinueButtonTap()
+    }
+    
+    private func handleContinueButtonTap() {
+        let username = usernameTextField.text ?? ""
+        let password = passwordTextField.text ?? ""
+        let rememberMe = rememberMeSwitch.isOn
+
+        if isValidLogin(username: username, password: password) {
+            passwordTextField.textColor = .none
+            errorLabel.isHidden = true
+            loginSuccessfully()
+            if rememberMe {
+                saveSession(username: username, password: password, rememberMe: rememberMe)
+            } else {
+                removeSession()
+            }
+        } else {
+            passwordTextField.textColor = .red
+            errorLabel.text = "Your username or password is incorrect. Please, try again."
+            errorLabel.isHidden = false
+        }
+    }
+
+    private func isValidLogin(username: String, password: String) -> Bool {
+        print(username)
+        print(password)
+        return username == "Admin" && password == "123456789"
+    }
+
+    private func loginSuccessfully() {
+        let alert = UIAlertController(
+            title: "Logging successful",
+            message: "¡Welcome!",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true)
+    }
+    
+    private func saveSession(username: String, password: String, rememberMe: Bool) {
+        UserDefaults.standard.set(username, forKey: "savedUsername")
+        UserDefaults.standard.set(password, forKey: "savedPassword")
+        UserDefaults.standard.set(rememberMe, forKey: "rememberMe")
+    }
+    
+    private func removeSession() {
+        UserDefaults.standard.removeObject(forKey: "savedUsername")
+        UserDefaults.standard.removeObject(forKey: "savedPassword")
+        UserDefaults.standard.removeObject(forKey: "rememberMe")
     }
 }
