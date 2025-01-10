@@ -30,6 +30,7 @@ class ViewController: UIViewController {
         let view = UIView()
         view.backgroundColor = UIColor.systemBackground
         view.layer.cornerRadius = 20
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.2
         view.layer.shadowRadius = 10
