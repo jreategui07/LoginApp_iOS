@@ -55,6 +55,7 @@ class LoginViewModel {
     }
     
     private func isValidLogin(username: String, password: String) -> Bool {
+        // This is just for demonstration, in a real-life project we usually request an API
         return username == "Admin" && password == "123456789"
     }
 }
