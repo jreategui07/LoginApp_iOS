@@ -91,11 +91,3 @@ watchOS/DeviceSupport/
 .profile
 *.idea/
 *.vscode/
-
-# Images and metadata
-*.tiff
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.svg
