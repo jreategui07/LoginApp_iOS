@@ -14,7 +14,13 @@ This demo application implements a login flow, showing the separation of respons
 
 ## Demo
 
-<img width="250" src="./docs/demo/Login_Demo.gif"/>
+<table>
+  <tr>
+    <td><img src="./docs/demo/demo_1.png"/></td>
+    <td><img src="./docs/demo/demo_2.png"/></td>
+    <td><img src="./docs/demo/demo_3.png"/></td>
+  </tr>
+</table>
 
 ## License [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
